@@ -1,4 +1,5 @@
 import {View} from './view.js'
+import {hashSHA256} from "@signumjs/crypto";
 
 export class DetailsCodeTabView extends View {
 
@@ -10,7 +11,7 @@ export class DetailsCodeTabView extends View {
   renderView() {
     const divElement = document.createElement('div');
     // hashing the code can be interesting to check uniqueness
-    const codeHash = sig$crypto.hashSHA256(this._contract.machineCode);
+    const codeHash = hashSHA256(this._contract.machineCode);
     divElement.innerHTML= `
 <div class="contract-code">
 ${this._contract.machineCode}

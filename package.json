@@ -17,6 +17,10 @@
     "vite": "^3.2.1"
   },
   "dependencies": {
+    "@signumjs/contracts": "^1.0.0-rc.41",
+    "@signumjs/core": "^1.0.0-rc.41",
+    "@signumjs/crypto": "^1.0.0-rc.41",
+    "@signumjs/util": "^1.0.0-rc.41",
     "serve": "^14.0.1"
   }
 }

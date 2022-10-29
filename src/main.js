@@ -1,13 +1,14 @@
 import {ContractsView, ErrorMessageView } from './views'
 import {Modal} from "./modal.js";
+import {Address, LedgerClientFactory} from "@signumjs/core";
 
-const TestNetUrl = "https://europe3.testnet.signum.network"
-const MainNetUrl = "https://europe.signum.network"
+const DefaultTestNetUrl = "https://europe3.testnet.signum.network"
+const DefaultMainNetUrl = "https://europe.signum.network"
 
 function getCurrentAccountId() {
   let accountId = document.getElementById('address-field').value.trim();
   try{
-    const address = sig$.Address.create(accountId)
+    const address = Address.create(accountId)
     accountId = address.getNumericId();
   }catch(e){
     console.error('Invalid address found', accountId)
@@ -16,9 +17,11 @@ function getCurrentAccountId() {
 }
 
 function updateNetwork(newNodeHost) {
-  if (window.ApiSettings.nodeHost !== newNodeHost) {
-    window.ApiSettings.nodeHost = newNodeHost;
-    window.SignumApi = sig$.composeApi(window.ApiSettings);
+  const currentHost = SignumApi.service.settings.nodeHost
+  if (currentHost !== newNodeHost) {
+    window.SignumApi = LedgerClientFactory.createClient({
+      nodeHost: newNodeHost
+    });
   }
 }
 
@@ -61,8 +64,22 @@ function applyQueryArguments() {
   const args = parseArguments()
 
   const networkSelector = document.getElementById('network-selector');
-  networkSelector.value = args.testnet === true ? TestNetUrl : MainNetUrl
+
+  let node = args.testnet === true ? DefaultTestNetUrl : DefaultMainNetUrl
+  if(args.node){
+    if([...networkSelector.options].map( o => o.value ).includes(args.node)){
+      node = args.node;
+    } else{
+      const newOption = document.createElement('optgroup');
+      newOption.setAttribute('label', 'Custom Node');
+      newOption.innerHTML = `<option value=${args.node}>${args.node}</option>`
+      networkSelector.appendChild(newOption)
+      node = args.node
+    }
+  }
+  networkSelector.value = node
   networkSelector.dispatchEvent(new Event('change'));
+
 
   if (args.address) {
     const addressField = document.getElementById('address-field')
@@ -75,8 +92,12 @@ function applyQueryArguments() {
 (() => {
 
   const addressInput = document.getElementById('address-button');
-  addressInput.addEventListener('click', e => {
-    fetchContracts(getCurrentAccountId(e.target.value))
+  addressInput.addEventListener('click', async e => {
+    addressInput.innerText = 'Loading...'
+    addressInput.setAttribute('disabled', 'disabled')
+    await fetchContracts(getCurrentAccountId(e.target.value))
+    addressInput.innerText = 'Inspect'
+    addressInput.removeAttribute('disabled')
   });
 
   const networkSelector = document.getElementById('network-selector');
@@ -87,8 +108,9 @@ function applyQueryArguments() {
   const updateAction = document.getElementById('update-action');
   updateAction.addEventListener('click', onUpdateContractsClick);
 
-  window.ApiSettings = new sig$.ApiSettings(networkSelector.value, "burst");
-  window.SignumApi = sig$.composeApi(window.ApiSettings);
+  window.SignumApi = LedgerClientFactory.createClient({
+    nodeHost: networkSelector.value
+  });
   window.modal = new Modal();
 
   applyQueryArguments()

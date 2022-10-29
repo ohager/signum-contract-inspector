@@ -1,4 +1,5 @@
 import {View} from './view.js'
+import {ContractDataView} from "@signumjs/contracts";
 
 // this small function ignores eventual conversion exceptions,
 // which would stop code execution otherwise
@@ -24,7 +25,7 @@ export class DetailsDataTabView extends View {
     // The contract helper is your friend, if you want access variables the easy way
     // The data in the contract is stored in 8 byte blocks (expressed by Hex Values) and in little endian order
     // The helper not only converts to big endian order, but also converts into decimal, or tries to convert into string format
-    const helper = new sig$contracts.ContractDataView(this._contract);
+    const helper = new ContractDataView(this._contract);
     const {machineData} = this._contract;
     const machineDataTokens = [];
 
