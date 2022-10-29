@@ -5,7 +5,7 @@ This handy tool allows to inspect [Signum Smart Contracts](https://github.com/si
 and allows detailed inspection. This tool is mostly for smart contract developers who want to inspect the current 
 data stack of a contract.
 
-![Screenshot](./inspector.png)
+![Screenshot](./inspector.jpg)
 
 [Go to live app](https://signum-contract-inspector.vercel.app//)
 
