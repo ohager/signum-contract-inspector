@@ -1,0 +1,22 @@
+{
+  "name": "signum-contract-inspector",
+  "version": "1.0.0",
+  "description": "Inspect Signum Smart Contracts and their Data Stack",
+  "main": "index.js",
+  "repository": "git@github.com:ohager/signum-contract-inspector.git",
+  "author": "ohager <oliver@devbutze.com>",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^3.2.1"
+  },
+  "dependencies": {
+    "serve": "^14.0.1"
+  }
+}
