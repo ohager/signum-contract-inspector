@@ -1,5 +1,5 @@
 
-#### Signum Smart Contracts Inspector
+#### Signum Smart Contract Inspector
 
 This handy tool allows to inspect [Signum Smart Contracts](https://github.com/signum-network/signum-smartj)
 and allows detailed inspection. This tool is mostly for smart contract developers who want to inspect the current 
