@@ -1,11 +1,13 @@
 
 #### Signum Smart Contracts Inspector
 
-This example application lists all [Smart Contracts](https://github.com/burst-apps-team/blocktalk) of an account, and allows detailed inspection
+This handy tool allows to inspect [Signum Smart Contracts](https://github.com/signum-network/signum-smartj)
+and allows detailed inspection. This tool is mostly for smart contract developers who want to inspect the current 
+data stack of a contract.
 
 ![Screenshot](../../../assets/inspector.png)
 
-[Go to live app](https://contracts-inspector.ohager.vercel.app/)
+[Go to live app](https://signum-contract-inspector.vercel.app//)
 
 Run the `index.html` in any static file server.
 
@@ -18,14 +20,17 @@ Using [serve](https://www.npmjs.com/package/serve) may be the easiest way:
 
 Additional Url parameters
 
-- address: A burst address or account id
+- address: A Signum Address or Account Id of either a creator or contract
 - testnet: If passed the testnet will be chosen, otherwise mainnet
+- node: You can add node to be preselected, which can either be a custom one, i.e. `https://foo.signum.network`, or one of the featured nodes, i.e. `https://brazil.signum.network`
 
-``
 
-##### Used methods/classes:
-	- core/apiCompose
-	- core/api.account.getContractsByAccount
-	- core/ContractHelper
-	- util/convertAddressToNumericId
-	- crypto/hashSHA256
+Examples:
+
+1. List all contracts of account `TS-QAJA-QW5Y-SWVP-4RVP4` in testnet
+
+`https://signum-contract-inspector.vercel.app/?address=TS-QAJA-QW5Y-SWVP-4RVP4&testnet`
+
+2. Shows the details of contract `10904650711172151453` in a custom node
+
+`https://signum-contract-inspector.vercel.app/?address=10904650711172151453&node=https://lootboy.signum.network`
