@@ -59,6 +59,15 @@ export class DetailsDataTabView extends View {
     valuesElement[0].querySelector('input[name="rev-string"]').value = tokenElement.attributes['data-rev-string'].value;
   }
 
+  onClick(e) {
+    const tokenElement = e.target;
+    const dataElements = document.getElementsByClassName('token');
+    for(let el of dataElements){
+      el.classList.remove('active')
+    }
+    tokenElement.classList.add('active')
+  }
+
   _getStaticHtmlWrapper() {
     return`<div class="contract-data__raw">
     <div></div>
@@ -94,6 +103,7 @@ export class DetailsDataTabView extends View {
   _renderCodeVariables(parentElement) {
     const tokens = this._tokenizeMachinedata();
     const onHoverFunction = this.onHover.bind(this);
+    const onClickFunction = this.onClick.bind(this);
     for (let i = 0; i < tokens.length; ++i) {
       const {token, hex, decimal, string, revString} = tokens[i];
       const spanElement = document.createElement('span');
@@ -106,6 +116,7 @@ export class DetailsDataTabView extends View {
       spanElement.setAttribute('data-rev-string', `${revString}`);
       spanElement.innerText = token;
       spanElement.onmouseover = onHoverFunction;
+      spanElement.onclick = onClickFunction;
       parentElement.appendChild(spanElement);
     }
   }

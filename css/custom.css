@@ -104,7 +104,10 @@ tr.c-table__row:hover {
     display: inline-block;
 }
 
-
+#detail-tabs .token.active {
+    border: 1px solid var(--color-outline);
+    color: #333
+}
 
 @keyframes pulse {
     0% {
