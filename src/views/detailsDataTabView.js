@@ -22,6 +22,7 @@ export class DetailsDataTabView extends View {
   constructor(parent, contract) {
     super(parent);
     this._contract = contract;
+    this._hasActiveToken = false;
   }
 
   _tokenizeMachinedata() {
@@ -50,6 +51,8 @@ export class DetailsDataTabView extends View {
   }
 
   onHover(e) {
+    if(this._hasActiveToken) return;
+
     const tokenElement = e.target;
     const valuesElement = document.getElementsByClassName('contract-data__values');
     valuesElement[0].querySelector('input[name="index"]').value = tokenElement.attributes['data-index'].value;
@@ -62,10 +65,19 @@ export class DetailsDataTabView extends View {
   onClick(e) {
     const tokenElement = e.target;
     const dataElements = document.getElementsByClassName('token');
+    // toggle current active element
+    if(tokenElement.classList.contains('active')){
+      tokenElement.classList.remove('active')
+      this._hasActiveToken = false;
+      return;
+    }
+    // otherwise select another
     for(let el of dataElements){
       el.classList.remove('active')
     }
     tokenElement.classList.add('active')
+    this._hasActiveToken = true;
+
   }
 
   _getStaticHtmlWrapper() {
