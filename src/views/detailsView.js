@@ -2,6 +2,7 @@ import {View} from './view.js'
 import {DetailsAttributesTabView} from "./detailsAttributesTabView.js";
 import {DetailsDataTabView} from "./detailsDataTabView.js";
 import {DetailsCodeTabView} from "./detailsCodeTabView.js";
+import {DetailsMapTabView} from "./detailsMapTabView.js";
 
 function forEachOfElement(htmlCollection, callback) {
   for (let i = 0; i < htmlCollection.length; ++i) {
@@ -20,6 +21,7 @@ export class DetailsView extends View {
       this._showTab.bind(this, 0),
       this._showTab.bind(this, 1),
       this._showTab.bind(this, 2),
+      this._showTab.bind(this, 3),
     ]
   }
 
@@ -34,12 +36,14 @@ export class DetailsView extends View {
       <button role="tab" class="c-tab-heading c-tab-heading--active">Attributes</button>
       <button role="tab" class="c-tab-heading">Data</button>
       <button role="tab" class="c-tab-heading">Code</button>
+      <button role="tab" class="c-tab-heading">Maps</button>
     </div>
   </div>
 `;
     divElement.appendChild(this._getTabPanel(DetailsAttributesTabView, true));
     divElement.appendChild(this._getTabPanel(DetailsDataTabView));
     divElement.appendChild(this._getTabPanel(DetailsCodeTabView));
+    divElement.appendChild(this._getTabPanel(DetailsMapTabView));
 
     return divElement
   }
