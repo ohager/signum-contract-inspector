@@ -8,6 +8,16 @@ export class DetailsMapTabView extends View {
     constructor(parent, contract) {
         super(parent);
         this._contract = contract;
+
+        // add listeners when modal opens
+        window.addEventListener('modal:open', () => {
+            console.debug("hydrating detailsMapTabView");
+            const key1Button = document.getElementById('key1-button');
+            key1Button.addEventListener('click', this._loadContractMap.bind(this));
+
+            const key1Input = document.getElementById('key1-field');
+            key1Input.addEventListener('keyup', this._validateInput.bind(this));
+        })
     }
 
     _validateInput(e) {
@@ -65,6 +75,10 @@ ${keyValuesHtml}
 
 
     renderView() {
+
+
+
+
         const wrapper = document.createElement('div');
         wrapper.innerHTML = `
 <div id="input-form">
@@ -88,15 +102,6 @@ ${keyValuesHtml}
 </div>
 <table id="contract-map-${this._contract.at}" class="c-table" style="overflow-y: auto; max-height: 300px"></table>
 `
-
-        window.addEventListener('load', () => {
-            const key1Button = document.getElementById('key1-button');
-            key1Button.addEventListener('click', this._loadContractMap.bind(this));
-
-            const key1Input = document.getElementById('key1-field');
-            key1Input.addEventListener('keyup', this._validateInput.bind(this));
-        })
-
         return wrapper;
     }
 }
